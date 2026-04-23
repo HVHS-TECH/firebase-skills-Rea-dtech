@@ -21,7 +21,47 @@ function helloWorld(){
   console.log("Running helloWorld()")
   firebase.database().ref('/').set(
     {
-      message: 'Hello World!'
+      message: 'Kia ora'
     }
   )
 }
+function goodBye(){
+  console.log("goodbye")
+  firebase.database().ref('/').set(
+    {
+      message: 'Ka kite ano'
+
+    }
+  )
+}
+//simple read (reads the database)
+function simpleRead(){
+ console.log("Reading message");
+ firebase.database().ref('/').child('message').once('value', displayRead);
+ console.log("Leaving simpleRead")
+
+}
+
+function displayRead(snapshot) {
+  console.log("Running displayRead(), the message is: " + snapshot.val())
+  HTML_OUTPUT.innerHTML = snapshot.val();
+}
+//if there is no data dbData will be null
+function display(snapshot){
+  var dbData = snapshot.val();
+  if (dbData ==null) {
+    console.log ('there was no record when trying to read the message');
+  }
+  else {
+    console.log("the message is: " +dbData)
+  }
+}
+
+//dumps the error message to the console
+function fb_readError(error) {
+  console.log("there was an error reading this message")
+  console.error(error);
+}
+
+
+//got up too the have a go on basic read
