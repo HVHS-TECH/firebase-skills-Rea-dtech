@@ -26,7 +26,7 @@ function helloWorld(){
   )
 }
 function goodBye(){
-  console.log("goodbye")
+  console.log("Running goodBye")
   firebase.database().ref('/').set(
     {
       message: 'Ka kite ano'
@@ -44,7 +44,7 @@ function simpleRead(){
 
 function displayRead(snapshot) {
   console.log("Running displayRead(), the message is: " + snapshot.val())
-  HTML_OUTPUT.innerHTML = snapshot.val();
+    HTML_OUTPUT.innerHTML = snapshot.val();
 }
 //if there is no data dbData will be null
 function display(snapshot){
@@ -55,6 +55,7 @@ function display(snapshot){
   else {
     console.log("the message is: " +dbData)
   }
+  HTML_OUTPUT.innerHTML = snapshot.val();
 }
 
 //dumps the error message to the console
@@ -65,3 +66,32 @@ function fb_readError(error) {
 
 
 //got up too the have a go on basic read
+
+function safeRead(){
+    console.log("running safeRead");
+     firebase.database()
+     .ref('/')
+     .child('message')
+     .once('value', display, fb_readError,);
+
+     console.log("safeRead complete")
+
+
+}
+//realtime listener
+function fb_readListener() {
+  console.log("Read Listener")
+  firebase.database()
+  .ref('/message')
+  .on('value', display, fb_logDatabaseRead)
+}
+
+function fb_logDatabaseRead(){
+  console.log("listener reading database")
+  firebase.database()
+  .ref('/message')
+  .on('value', display, fb_readError);
+
+}
+
+fb_readListener();
