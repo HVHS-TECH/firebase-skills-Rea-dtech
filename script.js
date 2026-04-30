@@ -98,7 +98,7 @@ function fb_logDatabaseRead() {
 
 }
 
-
+function highScoreTable(){
 highscoreTable = {
   highScores: {
   game1: {
@@ -107,6 +107,7 @@ highscoreTable = {
         jack: 111,
           micheal: 3.232,
             yug: 1288123913,
+             rea: 4,
     }
   },
   game2: {
@@ -120,6 +121,7 @@ highscoreTable = {
   }
 }
 }
+
 firebase.database()
   .ref('/')
   .set(highscoreTable)
@@ -129,26 +131,42 @@ firebase.database()
   .set(232)
 
 firebase.database()
-  .ref('/game1/users/' + user)
+  .ref('/highScores/game1/users/' + user)
   .set(score)
-
+}
 function fb_readHighScores() {
   console.log("Reading High scores");
-  firebase.database().ref('/highScores/game1').once('value', fb_displayHighScores, fb_readError)
+  firebase.database().ref('/highScores/game1/users').orderByValue() .once('value', fb_displayHighScores, fb_readError)
 }
 
-function fb_displayHighScores(snapshot) {
+/*function fb_displayHighScores(snapshot) {
   let highScores = snapshot.val()
   console.log("Rea got" + highScores["Rea"] + "points")
   let names = Object.keys(highScores);
   console.log(names);
   for(i = 0; i < names.length;i++){
     let key = names[i];
-    console.log("Score "+i+" is for"+ key)
+    console.log("Score "+i+" is for "+ key +". "+ highScores[key] + " points.")
   }
 
 }
+*/
+function reasHighScores() {
+  firebase.database()
+    .ref('/highScores/game1/users/rea')
+    .once('value', function(snapshot) {
+      let score = snapshot.val();
+      console.log('reas high score is ' + score)
+    }, fb_readError);
+}
 
+function fb_displayHighScores(snapshot)
+{snapshot.forEach(fb_showOneScore)
+}
+
+function fb_showOneScore(child) {
+  console.log(child.key+" got "+ child.val()+" points ");
+}
 
 
 // runs the fb_readListener function
