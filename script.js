@@ -98,45 +98,45 @@ function fb_logDatabaseRead() {
 
 }
 
-function highScoreTable(){
-highscoreTable = {
-  highScores: {
-  game1: {
-    users: {
-      Dhruv: 99,
-        jack: 111,
+function highScoreTable() {
+  highscoreTable = {
+    highScores: {
+      game1: {
+        users: {
+          Dhruv: 99,
+          jack: 111,
           micheal: 3.232,
-            yug: 1288123913,
-             rea: 4,
-    }
-  },
-  game2: {
-    users: {
-      Dhruv: 12121,
-        jack: 14,
+          yug: 1288123913,
+          rea: 4,
+        }
+      },
+      game2: {
+        users: {
+          Dhruv: 12121,
+          jack: 14,
           mikaela: 1,
-            sasha: 2,
-              yug: 23,
+          sasha: 2,
+          yug: 23,
+        }
+      }
     }
   }
-}
-}
 
-firebase.database()
-  .ref('/')
-  .set(highscoreTable)
+  firebase.database()
+    .ref('/')
+    .set(highscoreTable)
 
-firebase.database()
-  .ref('/highScores/game1/users/jenna/')
-  .set(232)
+  firebase.database()
+    .ref('/highScores/game1/users/jenna/')
+    .set(232)
 
-firebase.database()
-  .ref('/highScores/game1/users/' + user)
-  .set(score)
+  firebase.database()
+    .ref('/highScores/game1/users/' + user)
+    .set(score)
 }
 function fb_readHighScores() {
   console.log("Reading High scores");
-  firebase.database().ref('/highScores/game1/users').orderByValue() .once('value', fb_displayHighScores, fb_readError)
+  firebase.database().ref('/highScores/game1/users').orderByValue().limitToLast(3).once('value', fb_displayHighScores, fb_readError)
 }
 
 /*function fb_displayHighScores(snapshot) {
@@ -154,18 +154,23 @@ function fb_readHighScores() {
 function reasHighScores() {
   firebase.database()
     .ref('/highScores/game1/users/rea')
-    .once('value', function(snapshot) {
+    .once('value', function (snapshot) {
       let score = snapshot.val();
       console.log('reas high score is ' + score)
     }, fb_readError);
 }
 
-function fb_displayHighScores(snapshot)
-{snapshot.forEach(fb_showOneScore)
+function fb_displayHighScores(snapshot) {
+  snapshot.forEach(fb_showOneScore)
 }
 
 function fb_showOneScore(child) {
-  console.log(child.key+" got "+ child.val()+" points ");
+  const ITEMS = [1, 2, 3];
+  ITEMS.reverse();
+  console.log(ITEMS); // [3, 2, 1]
+  console.log(child.key + " got " + child.val() + " points ");
+
+
 }
 
 
