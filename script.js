@@ -165,14 +165,14 @@ function fb_displayHighScores(snapshot) {
 }
 
 function fb_showOneScore(child) {
-  const ITEMS = [1, 2, 3];
-  ITEMS.reverse();
-  console.log(ITEMS); // [3, 2, 1]
   console.log(child.key + " got " + child.val() + " points ");
 
 
 }
 
+function sortByName() {
+  function.database().ref(".highScores/game1/users")
+}
 
 // runs the fb_readListener function
 fb_readListener();
