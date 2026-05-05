@@ -5,7 +5,8 @@
  **                                                          **
  **************************************************************
  **************************************************************/
-let user = "toby";
+
+ let user = "toby";
 let score = 0;
 let points = 4;
 
@@ -171,8 +172,38 @@ function fb_showOneScore(child) {
 }
 
 function sortByName() {
-  function.database().ref(".highScores/game1/users")
+  console.log('sorting by name')
+  firebase.database()
+    .ref("/highScores/game1/users")
+    .orderByKey() 
+    .once('value', fb_displayHighScores, fb_readError);
+
 }
+
+function fb_login() {
+  
+const auth = getAuth();
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    console.log("logged in")
+    console.log(user)
+  //if user is signed in
+    const uid = user.uid;
+    // ...
+  } else {
+    console.log("Not logged in")
+    var provider = new firebase.auth.GoogleAuthProvider();
+    firebase.auth().signInwithPopup(provider).then(function(result) {
+      var token = result.crediential.accessToken;
+      var user = result.user;
+    
+    }
+  )
+    // User is signed out
+  }
+});
+}
+
 
 // runs the fb_readListener function
 fb_readListener();
