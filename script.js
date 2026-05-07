@@ -9,7 +9,7 @@
  let user = "toby";
 let score = 0;
 let points = 4;
-
+var GLOBAL_user;
 
 const HTML_OUTPUT = document.getElementById("databaseOutput");
 
@@ -180,29 +180,44 @@ function sortByName() {
 
 }
 
-function fb_login() {
+function fb_handleLogin(_user) {
+  if (_user) {
+    console.log("User is logged in")
+    GLOBAL_user = _user;// saving user details
   
-const auth = getAuth();
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    console.log("logged in")
-    console.log(user)
-  //if user is signed in
-    const uid = user.uid;
-    // ...
   } else {
-    console.log("Not logged in")
-    var provider = new firebase.auth.GoogleAuthProvider();
-    firebase.auth().signInwithPopup(provider).then(function(result) {
-      var token = result.crediential.accessToken;
-      var user = result.user;
-    
-    }
-  )
-    // User is signed out
+    console.log("User is not logged in - starting the pop up")
+    fb_popupLogin();
   }
-});
 }
+
+
+
+//listener for login state
+function fb_login() {
+  authenticationListener = firebase.auth().onAuthStateChanged(fb_handleLogin);
+}
+
+//run when login state of user changes
+function fb_handleLogin(_user) {
+  if (_user) {
+    console.log("User is logged in")
+    GlOBAL_user = _user; //save the object to a global varible
+  } else {
+    console.log("User is not logged in - starting the popup process")
+    fb_popupLogin();
+  }
+}
+
+// run the google login prompt
+function fb_popupLogin () {
+  var provider = new firebase.auth.GoogleAuthProvider();
+
+  firebase.auth().signInWithPopup(provider).then((result) => {
+    GLOBAL_user = result.user;
+    console.log("User has logged in")
+  });
+  }
 
 
 // runs the fb_readListener function
