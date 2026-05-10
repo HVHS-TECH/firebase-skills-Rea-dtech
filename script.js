@@ -1,3 +1,5 @@
+/*
+
 /**************************************************************
  **************************************************************
  **                                                          **
@@ -5,7 +7,7 @@
  **                                                          **
  **************************************************************
  **************************************************************/
-
+/*
  let user = "toby";
 let score = 0;
 let points = 4;
@@ -22,7 +24,8 @@ const HTML_OUTPUT = document.getElementById("databaseOutput");
 // The ref('/') part tells the operation to write to the base level of the database "/"
 // This means it replaces the whole database with message:Hello World
 /**************************************************************/
-function helloWorld() {
+
+/*function helloWorld() {
   console.log("Running helloWorld()")
   firebase.database().ref('/').set(
     {
@@ -223,3 +226,4 @@ function fb_popupLogin () {
 // runs the fb_readListener function
 fb_readListener();
 
+*/
