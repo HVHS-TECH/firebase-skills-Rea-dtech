@@ -1,12 +1,10 @@
 var GLOBAL_user;
 
 
-
 function fb_handleLogin(_user) {
   if (_user) {
     console.log("User is logged in")
     GLOBAL_user = _user;// saving user details
-  
   } else {
     console.log("User is not logged in - starting the pop up")
     fb_popupLogin();
@@ -34,38 +32,54 @@ function fb_handleLogin(_user) {
 }
 
 // run the google login prompt
-function fb_popupLogin () {
+function fb_popupLogin() {
   var provider = new firebase.auth.GoogleAuthProvider();
 
   firebase.auth().signInWithPopup(provider).then((result) => {
     GLOBAL_user = result.user;
     console.log("User has logged in")
   });
-  }
+}
 
 function hello() {
-    if (GLOBAL_user) {
-        console.log(GLOBAL_user.displayName);
-        
-       
-    } else {
-        console.log("log in first");
-    }
+  if (GLOBAL_user) {
+    console.log(GLOBAL_user.displayName);
+
+
+  } else {
+    console.log("log in first");
+  }
 }
- 
+
 
 function favfood() {
-    if (!GLOBAL_user) {
-        console.log("Please log in first");
-        return;
-    }
+  if (!GLOBAL_user) {
+    alert("Please log in first");
+    return;
+  }
 
-    let username = GLOBAL_user.displayName;
-        let favFood = prompt(
-            "Hello " + username + ". What is your fav food?"
-        ); 
-        console.log(username + "'s favorite food is " + favFood);
-        firebase.database.ref('/').set(
-            favfood
-        )
-    }
+  let username = GLOBAL_user.displayName;
+  let favFood = prompt(
+    "Hello " + username + ". What is your fav food?"
+  );
+  console.log(username + "'s favorite food is " + favFood);
+    firebase.database().ref('/users/favfood/'+username).set(favFood)
+      .then(() => {
+        console.log("wrote to database");
+      })
+      .catch((error) => {
+        console.error("Database write failed:", error);
+      });
+  }
+
+
+  function email() {
+    if(GLOBAL_user) {
+    console.log("email")
+    let div = document.getElementById("myDiv");
+    div.innerHTML = "to: " + GLOBAL_user.email;
+  }else {
+    alert("error user is not logged in")
+  }
+  }
+
