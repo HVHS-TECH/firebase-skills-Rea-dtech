@@ -77,9 +77,16 @@ function favfood() {
     if(GLOBAL_user) {
     console.log("email")
     let div = document.getElementById("myDiv");
+    let emailcontent = document.getElementById("emailcontent")
     div.innerHTML = "to: " + GLOBAL_user.email;
+    emailcontent.innerHTML = "Welcome to Reas website"
+
   }else {
     alert("error user is not logged in")
   }
+  }
+
+  function  popular(){
+    
   }
 
