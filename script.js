@@ -7,7 +7,7 @@
  **                                                          **
  **************************************************************
  **************************************************************/
-/*
+
  let user = "toby";
 let score = 0;
 let points = 4;
@@ -25,7 +25,7 @@ const HTML_OUTPUT = document.getElementById("databaseOutput");
 // This means it replaces the whole database with message:Hello World
 /**************************************************************/
 
-/*function helloWorld() {
+function helloWorld() {
   console.log("Running helloWorld()")
   firebase.database().ref('/').set(
     {
@@ -143,7 +143,7 @@ function fb_readHighScores() {
   firebase.database().ref('/highScores/game1/users').orderByValue().limitToLast(3).once('value', fb_displayHighScores, fb_readError)
 }
 
-/*function fb_displayHighScores(snapshot) {
+function fb_displayHighScores(snapshot) {
   let highScores = snapshot.val()
   console.log("Rea got" + highScores["Rea"] + "points")
   let names = Object.keys(highScores);
@@ -154,7 +154,7 @@ function fb_readHighScores() {
   }
 
 }
-*/
+
 function reasHighScores() {
   firebase.database()
     .ref('/highScores/game1/users/rea')
@@ -226,4 +226,3 @@ function fb_popupLogin () {
 // runs the fb_readListener function
 fb_readListener();
 
-*/

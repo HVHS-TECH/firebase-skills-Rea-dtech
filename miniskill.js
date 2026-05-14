@@ -87,6 +87,8 @@ function favfood() {
   }
 
   function  popular(){
+    console.log("displaying all fav fruits")
+    firebase.database().ref('/')
     
   }
 
